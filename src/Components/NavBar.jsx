@@ -57,7 +57,7 @@ const NavBar = ({ handleScroll }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/login", {
+      const res = await axios.post("https://coding-ninjas-clone-backend.vercel.app/login", {
         email,
         password,
       });
@@ -78,7 +78,7 @@ const NavBar = ({ handleScroll }) => {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/register", {
+      const res = await axios.post("https://coding-ninjas-clone-backend.vercel.app/register", {
         signInUsername,
         signInEmail,
         signInPassword,
@@ -99,7 +99,7 @@ const NavBar = ({ handleScroll }) => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const response = await axios.get("http://localhost:3000/protected-route",
+          const response = await axios.get("https://coding-ninjas-clone-backend.vercel.app/protected-route",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -118,7 +118,7 @@ const NavBar = ({ handleScroll }) => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/logout");
+      const res = await axios.post("https://coding-ninjas-clone-backend.vercel.app/logout");
       toast.success(res.data.message);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
