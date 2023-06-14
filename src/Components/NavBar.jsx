@@ -57,10 +57,7 @@ const NavBar = ({ handleScroll }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://coding-ninjas-clone-backend.vercel.app/login", {
-        email,
-        password,
-      });
+      const res = await axios.post("https://codingninjasclonebackend.onrender.com/login",{email,password});
       toast.success(res.data.message);
       if (res.data.message == "Login successful") {
         setLoggedIn(true);
@@ -78,7 +75,7 @@ const NavBar = ({ handleScroll }) => {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://coding-ninjas-clone-backend.vercel.app/register", {
+      const res = await axios.post("https://codingninjasclonebackend.onrender.com/register", {
         signInUsername,
         signInEmail,
         signInPassword,
@@ -99,7 +96,7 @@ const NavBar = ({ handleScroll }) => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const response = await axios.get("https://coding-ninjas-clone-backend.vercel.app/protected-route",
+          const response = await axios.get("https://codingninjasclonebackend.onrender.com/protected-route",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -118,7 +115,7 @@ const NavBar = ({ handleScroll }) => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post("https://coding-ninjas-clone-backend.vercel.app/logout");
+      const res = await axios.post("https://codingninjasclonebackend.onrender.com/logout");
       toast.success(res.data.message);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
@@ -233,7 +230,7 @@ const NavBar = ({ handleScroll }) => {
                   <div className="modal-overlay">
                     <div className="modal-content">
                       {showLogin ? (
-                        <form onSubmit={handleLoginSubmit} action="POST">
+                        <form onSubmit={handleLoginSubmit} >
                           <h2>Login</h2>
                           <label>
                             Email:
@@ -257,7 +254,7 @@ const NavBar = ({ handleScroll }) => {
                           </div>
                         </form>
                       ) : (
-                        <form onSubmit={handleSignInSubmit} action="POST">
+                        <form onSubmit={handleSignInSubmit} >
                           <h2>Sign In</h2>
                           <label>
                             Username:
