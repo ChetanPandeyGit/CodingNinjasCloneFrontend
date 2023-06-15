@@ -57,7 +57,7 @@ const NavBar = ({ handleScroll }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://codingninjasclonebackend.onrender.com/login",{email,password});
+      const res = await axios.post("http://localhost:3000/login",{email,password});
       toast.success(res.data.message);
       if (res.data.message == "Login successful") {
         setLoggedIn(true);
@@ -75,7 +75,7 @@ const NavBar = ({ handleScroll }) => {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("https://codingninjasclonebackend.onrender.com/register", {
+      const res = await axios.post("http://localhost:3000/register", {
         signInUsername,
         signInEmail,
         signInPassword,
@@ -96,7 +96,7 @@ const NavBar = ({ handleScroll }) => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const response = await axios.get("https://codingninjasclonebackend.onrender.com/protected-route",
+          const response = await axios.get("http://localhost:3000/protected-route",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -115,7 +115,7 @@ const NavBar = ({ handleScroll }) => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post("https://codingninjasclonebackend.onrender.com/logout");
+      const res = await axios.post("http://localhost:3000/logout");
       toast.success(res.data.message);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
@@ -140,6 +140,7 @@ const NavBar = ({ handleScroll }) => {
   const navbarBackground = scrollPosition > 60 ? "indigo" : "transparent";
 
   const [menuBar, setMenuBar] = useState(false);
+  const userId = localStorage.getItem("userId");
   return (<>
       <div id='ham-icon'>{menuBar ? <IoMdClose size={30} color="#e1e1e3" onClick={()=>{ setMenuBar( !menuBar )}} />
     : <GiHamburgerMenu color="#e1e1e3" size={30} onClick={()=>{ setMenuBar( !menuBar )}}/> }<img className="logo" src={logo} /></div>
@@ -213,12 +214,14 @@ const NavBar = ({ handleScroll }) => {
 
           {loggedIn ? (
             <div className="log">
-              <li>{username}</li>
+              <Link to={`/dashboard/${userId}`}>My ClassRoom</Link>
+              
               <li>
                 <button onClick={handleLogout} className="login-btn">
                   Logout
                 </button>
               </li>
+              <li>{username}</li>
             </div>
           ) : (
             <li>

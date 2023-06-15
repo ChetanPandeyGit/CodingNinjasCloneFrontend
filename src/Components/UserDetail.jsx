@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
-const UserDetail = ({userId}) => {   
+const UserDetail = () => {   
+  const {userId} = useParams()
   const [user, setUser] = useState(null);
 
   useEffect(() => {

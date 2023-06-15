@@ -7,10 +7,10 @@ const Community = () => {
     <nav>
           <ul>
             <li >
-              <Link to="/dashboard/: userId" style={{color : "black"}}>Dashboard</Link>
+              <Link to={`/dashboard/${userId}`} style={{color : "black"}}>Dashboard</Link>
             </li>
             <li>
-              <Link to="/user/:userId" style={{color : "black"}}>User Details</Link>
+              <Link to={`/user/${userId}`} style={{color : "black"}}>User Details</Link>
             </li>
           </ul>
         </nav>
