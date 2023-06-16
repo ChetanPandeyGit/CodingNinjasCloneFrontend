@@ -17,6 +17,7 @@ import UpcomingEvents from "../Components/UpcomingEvents";
 import FooterTop from "../Components/FooterTop";
 import ImportantLinks from "../Components/ImportantLinks";
 import PayAccept from "../Components/PayAccept";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const scrollRef = useRef(null);
@@ -27,11 +28,13 @@ const Home = () => {
       <NavBar handleScroll={handleScroll}/>
       <Hero />
       <Banner />      
-      <p className="tag">14,000+ CODING NINJAS TO INSPIRE YOU</p>
+      <p id="tag">14,000+ CODING NINJAS TO INSPIRE YOU</p>
       <Alumni />
+      <Link to={'/alumni'}>
       <button className="hear-more">Hear more stories from our alumni</button>
+      </Link>
       <WhyJoin />
-      <p className="placed">Our students are placed at</p>
+      <p id="placed">Our students are placed at</p>
       <Companies />
       <button className="report-btn">Download Placement Report</button>
       <Reviews />
@@ -55,3 +58,4 @@ const Home = () => {
 };
        
 export default Home;
+

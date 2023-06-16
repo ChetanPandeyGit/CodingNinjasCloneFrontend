@@ -5,9 +5,13 @@ import CourseHero from '../Components/CourseHero';
 import newbanner from '../images/Alum/newbanner.svg'
 import '../Components/style.css'
 import {AiOutlineClockCircle} from 'react-icons/ai'
-import BuyButton from '../Components/BuyButton';
+import { useNavigate } from 'react-router-dom';
+import FooterTop from '../Components/FooterTop';
+import ImportantLinks from '../Components/ImportantLinks';
+import PayAccept from '../Components/PayAccept';
 
 const Courses= () => {
+  const navigate = useNavigate();
   const userId = localStorage.getItem("userId");
   const [courses, setCourses] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -16,7 +20,7 @@ const Courses= () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/courses');
+        const response = await axios.get('https://codingninjasclonebackend.onrender.com/courses');
         setCourses(response.data);
       } catch (error) {
         console.error(error);
@@ -28,7 +32,7 @@ const Courses= () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/courses/search', {
+      const response = await axios.get('https://codingninjasclonebackend.onrender.com/courses/search', {
         params: {
           keyword: searchKeyword,
         },
@@ -39,16 +43,10 @@ const Courses= () => {
     }
   };
 
-  const handleEnrollCourse = async (courseId) => {
-    try {
-      const response = await axios.post('http://localhost:3000/user/enroll', { userId, courseId});
-      console.log(response.data); 
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Failed to enroll course:', error);
-    }
-  };
 
+  const handleNavigation = (id, course) => {
+    navigate(`/courses/${id}`, { state: course })
+  }
   return (
     <div className="courses">
       <NavBar/>
@@ -75,7 +73,7 @@ const Courses= () => {
           <h3>Search Results</h3>
           <ul className="course-items">
             {searchResults.map((course) => (
-              <li key={course._id} className="course-item">
+              <li key={course._id} className="course-item" >
                 <div className="course-name">{course.name}</div>
                 <div className="course-description">{course.description}</div>
                 <div className="course-duration">Duration: {course.duration}</div>
@@ -90,19 +88,18 @@ const Courses= () => {
       <h2>All Courses</h2>
       <ul className="course-items">
         {courses.map((course) => (
-          <li key={course._id} className="course-item">
+          <li key={course._id} className="course-item" onClick={() => handleNavigation(course._id, course)}>
             <div className="course-name"><span>{course.name}</span> <img src={course.image} alt="logos" /></div>  
             <div className="course-description">{course.description}</div>
             <div className="course-duration"><AiOutlineClockCircle/>  {course.duration}</div>
-            <div className="course-fees">Fees: {course.fees}</div> 
-            <div onClick={()=>handleEnrollCourse(course._id)}><BuyButton courseId={course._id} amount={course.fees} /></div>            
+            <div className="course-fees">Fees: {course.fees}</div>                       
           </li>
         ))}
-      </ul>
-
-      
-    </div>
-      
+      </ul>      
+    </div> 
+    <FooterTop/>
+      <ImportantLinks/>
+      <PayAccept/>     
     </div>
   );
 };

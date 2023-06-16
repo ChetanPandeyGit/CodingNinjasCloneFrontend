@@ -5,6 +5,10 @@ import goldman from "../images/goldman.svg";
 import jpmorgan from "../images/jp-morgan-chase.png";
 import codingninjas from "../images/coding-ninjas.png";
 import pareksha from '../images/Alum/pareksha.webp'
+import harsh from '../images/Alum/harsh.webp'
+import satwika from '../images/Alum/satwika.webp'
+import rahul from '../images/Alum/rahul.webp'
+import richa from '../images/Alum/richa.webp'
 
 const Alumni = () => {
   const [activeDiv, setActiveDiv] = useState(0);
@@ -41,6 +45,7 @@ const Alumni = () => {
             </div>
           </>
         )}
+        <img src={pareksha} alt="alum" />
       </div>
       <div
         className={`alum ${activeDiv === 1 ? "expanded" : ""}`}
@@ -66,6 +71,7 @@ const Alumni = () => {
             </div>
           </>
         )}
+        <img src={harsh} alt="alum" />
       </div>
       <div
         className={`alum ${activeDiv === 2 ? "expanded" : ""}`}
@@ -89,6 +95,7 @@ const Alumni = () => {
             </div>
           </>
         )}
+        <img src={satwika} alt="alum" />
       </div>
       <div
         className={`alum ${activeDiv === 3 ? "expanded" : ""}`}
@@ -112,6 +119,7 @@ const Alumni = () => {
             </div>
           </>
         )}
+        <img src={rahul} alt="alum" />
       </div>
       <div
         className={`alum ${activeDiv === 4 ? "expanded" : ""}`}
@@ -136,6 +144,7 @@ const Alumni = () => {
             </div>
           </>
         )}
+        <img src={richa} alt="alum" />
       </div>
     </div>
   );

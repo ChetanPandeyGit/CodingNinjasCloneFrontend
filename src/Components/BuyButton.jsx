@@ -1,5 +1,6 @@
 import React from 'react';
 import { loadScript } from './utils'; 
+import { BiChevronsDown } from "react-icons/bi";
 
 const BuyButton = ({ courseId, amount }) => {
   const handleClick = async () => {
@@ -47,7 +48,7 @@ const BuyButton = ({ courseId, amount }) => {
     rzp.open();
   };
 
-  return <button onClick={handleClick} className='explore'>Buy Now</button>;
+  return <button onClick={handleClick} className="buy">Enroll Now <BiChevronsDown /></button>;
 };
 
 export default BuyButton;

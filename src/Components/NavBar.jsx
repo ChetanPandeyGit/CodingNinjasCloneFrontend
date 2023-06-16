@@ -8,7 +8,10 @@ import Experience from "./Experience";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { toast } from "react-hot-toast";
+import {ImCross} from 'react-icons/im'
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import ComDrop from "./ComDrop";
 
 const NavBar = ({ handleScroll }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -57,7 +60,7 @@ const NavBar = ({ handleScroll }) => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/login",{email,password});
+      const res = await axios.post("https://codingninjasclonebackend.onrender.com/login",{email,password});
       toast.success(res.data.message);
       if (res.data.message == "Login successful") {
         setLoggedIn(true);
@@ -75,7 +78,7 @@ const NavBar = ({ handleScroll }) => {
   const handleSignInSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/register", {
+      const res = await axios.post("https://codingninjasclonebackend.onrender.com/register", {
         signInUsername,
         signInEmail,
         signInPassword,
@@ -96,7 +99,7 @@ const NavBar = ({ handleScroll }) => {
       try {
         const token = localStorage.getItem("token");
         if (token) {
-          const response = await axios.get("http://localhost:3000/protected-route",
+          const response = await axios.get("https://codingninjasclonebackend.onrender.com/protected-route",
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -115,7 +118,7 @@ const NavBar = ({ handleScroll }) => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post("http://localhost:3000/logout");
+      const res = await axios.post("https://codingninjasclonebackend.onrender.com/logout");
       toast.success(res.data.message);
       localStorage.removeItem("token");
       localStorage.removeItem("userId");
@@ -172,18 +175,28 @@ const NavBar = ({ handleScroll }) => {
             </Link>
           </li>
           <li>
-            <Link to={"/scholarship"}>
+            <Link to={"https://www.codingninjas.com/landing/scholarship-test/"}>
               Scholarship <span>Upto 100% Off</span>{" "}
             </Link>
           </li>
           <li>
-            <Link to={"/community"}>
-              Dashboard
+            <Link onMouseEnter={handleDropdownOpen}
+              onMouseLeave={handleDropdownClose}>
+              Community
+              {isDropdownOpen && (
+                <div
+                  className="dropdown-modal"
+                  onMouseEnter={handleDropdownOpen}
+                  onMouseLeave={handleDropdownClose}
+                >
+                  <ComDrop />
+                </div>
+              )}
             </Link>
           </li>
           <li>
             <Link
-              to={"/practice"}
+              to={"https://www.codingninjas.com/codestudio/home"}
               onMouseEnter={handleDropdownOpen}
               onMouseLeave={handleDropdownClose}
             >
@@ -207,9 +220,9 @@ const NavBar = ({ handleScroll }) => {
             </Link>
           </li>
           <li>
-            <Link to={"/careercamp"}>
+            {/* <Link to={"/careercamp"}> */}
               <img src={careercamp} alt="careercamp" />
-            </Link>
+            {/* </Link> */}
           </li>
 
           {loggedIn ? (
@@ -221,7 +234,8 @@ const NavBar = ({ handleScroll }) => {
                   Logout
                 </button>
               </li>
-              <li>{username}</li>
+              <li><Link to={`/user/${userId}`}>{username}</Link></li>
+      
             </div>
           ) : (
             <li>
@@ -234,6 +248,7 @@ const NavBar = ({ handleScroll }) => {
                     <div className="modal-content">
                       {showLogin ? (
                         <form onSubmit={handleLoginSubmit} >
+                          <div onClick={()=>handleCloseModal()}><ImCross/></div>
                           <h2>Login</h2>
                           <label>
                             Email:
@@ -258,6 +273,7 @@ const NavBar = ({ handleScroll }) => {
                         </form>
                       ) : (
                         <form onSubmit={handleSignInSubmit} >
+                          <div onClick={()=>handleCloseModal()}><ImCross/></div>
                           <h2>Sign In</h2>
                           <label>
                             Username:

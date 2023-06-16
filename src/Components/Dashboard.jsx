@@ -68,15 +68,15 @@ const Dashboard = () => {
       <h1>Welcome to the Dashboard, {user && user.username}!</h1>
      {user && (
         <>
-          <h2>Enrolled Courses:</h2>
+          {/* <h2>Enrolled Courses:</h2> */}
           <ul>
             {courses.map((course) => (<>
               <li key={course.id}>{course.name}</li>
               <button onClick={() => handleEnrollCourse(course.id)}>Enroll</button></>
             ))}
           </ul>
-          <h2>Progress:</h2>
-          <p>{user.progress}% completed</p>
+          {/* <h2>Progress:</h2>
+          <p>{user.progress}% completed</p> */}
         </>
       )}
       </div>
