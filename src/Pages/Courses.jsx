@@ -12,7 +12,6 @@ import PayAccept from '../Components/PayAccept';
 
 const Courses= () => {
   const navigate = useNavigate();
-  const userId = localStorage.getItem("userId");
   const [courses, setCourses] = useState([]);
   const [searchKeyword, setSearchKeyword] = useState('');
   const [searchResults, setSearchResults] = useState([]);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import NavBar from "./NavBar";
 import { AiFillHome } from "react-icons/ai";
@@ -9,19 +9,26 @@ import PayAccept from "./PayAccept";
 import ImportantLinks from "./ImportantLinks";
 import FooterTop from "./FooterTop";
 import BuyButton from "./BuyButton";
+import axios from "axios";
 
 const CourseDesc = () => {
-  const handleEnrollCourse = async (courseId) => {
-    try {
-      const response = await axios.post('https://codingninjasclonebackend.onrender.com/user/enroll', { userId, courseId});
-      console.log(response.data); 
-      navigate('/dashboard');
-    } catch (error) {
-      console.error('Failed to enroll course:', error);
-    }
-  };
+  
   const location = useLocation();
   const course = location.state;
+  const userId = localStorage.getItem("userId");
+  const courseId = course._id;
+
+  const enrollCourse = () => {
+    axios
+      .post(`https://codingninjasclonebackend.onrender.com/user/${userId}/enrollCourse/${courseId}`)
+      .then((response) => {
+        console.log('Course Enrolled');
+      })
+      .catch((error) => {
+        console.error("Error enrolling in the course:", error);
+      });
+  };
+
   return (
     <div className="course-desc">
       <div style={{ background: "indigo" }}>
@@ -46,7 +53,7 @@ const CourseDesc = () => {
             <Link to={'/onboarding'}>
             <button>Start your free trial</button>
             </Link>
-            <div onClick={()=>handleEnrollCourse(course._id)}  >
+            <div onClick={enrollCourse} >
             <BuyButton courseId={course._id} amount={course.fees} />
             </div>
           </div>

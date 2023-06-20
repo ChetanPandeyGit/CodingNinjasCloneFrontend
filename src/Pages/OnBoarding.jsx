@@ -119,7 +119,7 @@ const Step1 = ({ data, onChange, onNext}) => {
       <div>
         <label htmlFor="phoneNumber">Phone Number *</label>
         <input
-          type="tel"
+          type="number"
           id="phoneNumber"
           placeholder="Phone Number" 
           value={phoneNumber}
@@ -155,7 +155,7 @@ const Step1 = ({ data, onChange, onNext}) => {
       <div>
         <label htmlFor="pinCode">Pin Code *</label>
         <input
-          type="text"
+          type="number"
           id="pinCode"
           placeholder="Pin Code"
           value={pinCode}
@@ -187,8 +187,8 @@ const Step1 = ({ data, onChange, onNext}) => {
           required
         >
           <option value="">Select City</option>
-          <option value="city1">City 1</option>
-          <option value="city2">City 2</option>
+          <option value="almora">Almora</option>
+          <option value="dehradun">Dehradun</option>
         </select>
         {errors.city && <p className="error">{errors.city}</p>}
       </div>
@@ -266,6 +266,8 @@ const Step2 = ({ data, onChange, onPrevious, onNext }) => {
           <option value="">- Select Graduation Year -</option>
           <option value="2022">2022</option>
           <option value="2023">2023</option>
+          <option value="2024">2024</option>
+          <option value="2025">2025</option>
         </select>
         {errors.graduationYear && (
           <p className="error">{errors.graduationYear}</p>
@@ -411,6 +413,7 @@ const Step3 = ({ data, onChange, onPrevious, onSubmit }) => {
         >
           <option value="">- Select Target Role -</option>
           <option value="webDeveloper">Web Developer</option>
+          <option value="softwareDeveloper">Software Developer</option>
         </select>
         {errors.targetRole && <p className="error">{errors.targetRole}</p>}
       </div>

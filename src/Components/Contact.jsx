@@ -1,15 +1,53 @@
 import React, { useState } from "react";
 import contact from "../images/contact.svg";
+import axios from "axios";
 
 const Contact = () => {
   const [contactNumber, setContactNumber] = useState("");
   const [firstName, setFirstName] = useState("");
   const [emailAddress, setEmailAddress] = useState("");
   const [graduationYear, setGraduationYear] = useState("");
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted");
+    validateForm();
+    const formData = {
+      contactNumber,
+      firstName,
+      emailAddress,
+      graduationYear,
+    };
+    try {
+      const response = await axios.post(
+        "https://codingninjasclonebackend.onrender.com/cbSubmitForm",
+        formData
+      );
+        alert('Form Data Submitted')
+      if (response.status === 200) {
+        console.log("Form submitted successfully");
+        setFirstName('');
+        setContactNumber('')
+        setEmailAddress('')
+        setGraduationYear('')
+      } else {
+        console.log("Form submission failed");
+      }
+    } catch (error) {
+      console.error("Error submitting the form", error);
+    }
+  };
+  const validateForm = () => {
+    const isContactNumberValid = /^\d{10}$/.test(contactNumber);
+    const isGraduationYearValid = /^\d{4}$/.test(graduationYear);
+    const isEmailAddressValid = /\S+@\S+\.\S+/.test(emailAddress);
+
+    setIsFormValid(
+      isContactNumberValid &&
+        isGraduationYearValid &&
+        isEmailAddressValid &&
+        firstName.length > 0
+    );
   };
   return (
     <div className="cout">
@@ -26,36 +64,50 @@ const Contact = () => {
           </div>
         </div>
         <div className="form">
-          <form onSubmit={handleSubmit}>            
-              <input
-                type="text"
-                placeholder="Contact Number"
-                value={contactNumber}
-                onChange={(e) => setContactNumber(e.target.value)}
-                required
-              />    
-              <input
-                type="text"
-                placeholder="First Name *"
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-                required
-              />            
-              <input
-                type="email"
-                placeholder="Email Address *"
-                value={emailAddress}
-                onChange={(e) => setEmailAddress(e.target.value)}
-                required
-              />            
-              <input
-                type="text"
-                placeholder="Graduation Year *"
-                value={graduationYear}
-                onChange={(e) => setGraduationYear(e.target.value)}
-                required
-              />           
-            <button type="submit">Request Callback</button>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="number"
+              placeholder="Contact Number"
+              value={contactNumber}
+              name="contact number"
+              onChange={(e) => {
+                setContactNumber(e.target.value);
+              }}
+              required
+            />
+            <input
+              type="text"
+              placeholder="First Name *"
+              value={firstName}
+              name="first name"
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
+              required
+            />
+            <input
+              type="email"
+              placeholder="Email Address *"
+              value={emailAddress}
+              name="email address"
+              onChange={(e) => {
+                setEmailAddress(e.target.value);
+              }}
+              required
+            />
+            <input
+              type="number"
+              placeholder="Graduation Year *"
+              value={graduationYear}
+              name="graduation year"
+              onChange={(e) => {
+                setGraduationYear(e.target.value);
+              }}
+              required
+            />
+            <button type="submit" >
+              Request Callback
+            </button>
           </form>
         </div>
       </div>

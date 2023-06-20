@@ -14,34 +14,33 @@ import PayAccept from './PayAccept';
 
 const Dashboard = () => {
   const {userId} = useParams()
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);  
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/user/dashboard/${userId}`); 
+        const response = await axios.get(`https://codingninjasclonebackend.onrender.com/user/dashboard/${userId}`); 
         setUser(response.data.user);
       } catch (error) {
         console.error(error);
       }
     };
-
     fetchUserData();
   }, []);
 
-  const [courses, setCourses] = useState([]);
-
   useEffect(() => {
-    fetchCourseListing();
+    fetchEnrolledCourses();
   }, []);
 
-  const fetchCourseListing = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3000/user/${userId}/courses`);
-      setCourses(response.data);
-    } catch (error) {
-      console.error('Failed to fetch course listing:', error);
-    }
+  const fetchEnrolledCourses = () => {
+    axios.get(`https://codingninjasclonebackend.onrender.com/user/${userId}/enrolledCourses`)
+      .then((response) => {
+        setEnrolledCourses(response.data.courses);
+      })
+      .catch((error) => {
+        console.error("Error fetching enrolled courses:", error);
+      });
   };
 
  
@@ -68,15 +67,13 @@ const Dashboard = () => {
       <h1>Welcome to the Dashboard, {user && user.username}!</h1>
      {user && (
         <>
-          {/* <h2>Enrolled Courses:</h2> */}
-          <ul>
-            {courses.map((course) => (<>
-              <li key={course.id}>{course.name}</li>
-              <button onClick={() => handleEnrollCourse(course.id)}>Enroll</button></>
+          <h2>Enrolled Courses</h2>
+          <ol>
+            {enrolledCourses.map((course) => (
+              <li key={course._id}>{course.name}</li>
             ))}
-          </ul>
-          {/* <h2>Progress:</h2>
-          <p>{user.progress}% completed</p> */}
+          </ol>
+        
         </>
       )}
       </div>

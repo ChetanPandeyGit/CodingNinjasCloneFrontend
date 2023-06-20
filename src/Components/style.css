@@ -1034,6 +1034,17 @@ li:hover .dropdown-modal {
   gap: 1rem;
   align-items: center;
 }
+.dash-cont ol{
+   display: flex;
+   gap: 2rem;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+.dash-cont li{
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #f44336;
+}
 .explore-courses{
   padding: 2rem ;
   display: flex;
